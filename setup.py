@@ -13,7 +13,7 @@ long_description = '\n\n'.join([
 
 
 setup(
-    name='emrt.necd',
+    name='emrt.necd.test',
     version='1.0a1',
     description="Necd testing metapackage",
     long_description=long_description,
@@ -22,13 +22,13 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.5.2",
         "Operating System :: OS Independent",
-        "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     ],
     keywords='Python Plone',
     author='Irina Botez',
     author_email='irina.botez@eaudeweb.ro',
-    url='https://pypi.python.org/pypi/emrt.necd',
-    license='GPL version 2',
+    url='https://pypi.python.org/pypi/emrt.necd.test',
+    license='GPL version 3',
     packages=find_packages('src', exclude=['ez_setup']),
     namespace_packages=['emrt'],
     package_dir={'': 'src'},
@@ -36,12 +36,11 @@ setup(
     zip_safe=False,
     install_requires=[
         'setuptools',
-        'selenium>=3.0.2',
+        'edw.seleniumtesting',	
     ],
     entry_points={
-        'console_scripts': ['necd = emrt.necd.main:run_cli'],
-        'emrt.necd': [
-            'emrt.necd.sample = emrt.necd.sample:suite'
+        'edw.seleniumtesting': [
+            'emrt.necd.test.login = emrt.necd.test.login:suite'
         ]
     }
 )
