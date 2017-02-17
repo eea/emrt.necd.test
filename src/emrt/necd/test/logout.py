@@ -3,6 +3,11 @@ import unittest
 from edw.seleniumtesting.common import BrowserTestCase
 
 
+USER_CREDENTIALS = {
+    'sectorexpert': 'pwd'
+    }
+
+
 def suite(browser, base_url):
     """Plone logout test 
     """
@@ -28,4 +33,3 @@ class LogoutTestCase(BrowserTestCase):
         logout = self.browser.find_element_by_id("personaltools-login")
 
         self.assertEqual(logout.text, "Log in")
-
