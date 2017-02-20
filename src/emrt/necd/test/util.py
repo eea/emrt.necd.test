@@ -35,18 +35,19 @@ def runas(role='', user='', pwd_from='users', usr_from='roles'):
         return wrapped
     return decorator
 
+class ElementFinder(object):
 
-def find_css(browser, selector):
-    return browser.find_element_by_css_selector(selector)
+    def __init__(self, browser):
+        self.browser = browser
 
+    def css(self, selector):
+        return self.browser.find_element_by_css_selector(selector)
 
-def find_name(browser, name):
-    return browser.find_element_by_name(name)
+    def name(self, name):
+        return self.browser.find_element_by_name(name)
 
+    def link(self, text):
+        return self.browser.find_element_by_link_text(text)
 
-def find_link(browser, text):
-    return browser.find_element_by_link_text(text)
-
-
-def find_xpath(browser, selector):
-    return browser.find_element_by_xpath(selector)
+    def xpath(self, selector):
+        return self.browser.find_element_by_xpath(selector)

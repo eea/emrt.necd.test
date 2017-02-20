@@ -4,6 +4,9 @@ import emrt.necd.test.util as util
 from edw.seleniumtesting.common import BrowserTestCase
 
 
+FINDER = None
+
+
 def suite(browser, base_url, extra_args):
     """ Call on review folder url providing user mapping and user accounts.\n
     `` seleniumtesting http://localhost/Plone/2017 \\
@@ -11,6 +14,9 @@ def suite(browser, base_url, extra_args):
         -ea users acc_sectorexpert acc_sectorexpert_pwd
     ``
     """
+    global FINDER
+    FINDER = util.ElementFinder(browser)
+
     test_suite = unittest.TestSuite()
 
     for name in ReviewFolder.my_tests():
@@ -44,7 +50,7 @@ class ReviewFolder(BrowserTestCase):
     def test_review_folder(self):
         """ Test 'Save Observation' button exists
         """
-        new_obs = util.find_link(self.browser, "New observation")
+        new_obs = FINDER.link("New observation")
         self.assertEqual("New observation", new_obs.text)
 
 
@@ -54,19 +60,19 @@ class AddObservation(BrowserTestCase):
         """ Test sectorexpert can add an observation.
         """
         # click new observation button
-        util.find_link(self.browser, "New observation").click()
+        FINDER.link('New observation').click()
 
         # fill in form fields
-        util.find_name(self.browser, 'form.widgets.text').send_keys('Test observation')
-        util.find_name(self.browser, 'form.widgets.year').send_keys('2017')
-        util.find_name(self.browser, 'form.widgets.pollutants:list').click()
-        util.find_name(self.browser, 'form.widgets.parameter:list').click()
+        FINDER.name('form.widgets.text').send_keys('Test observation')
+        FINDER.name('form.widgets.year').send_keys('2017')
+        FINDER.name('form.widgets.pollutants:list').click()
+        FINDER.name('form.widgets.parameter:list').click()
 
         # submit form
-        util.find_name(self.browser, "form.buttons.save").click()
+        FINDER.name('form.buttons.save').click()
 
         # check saved information
-        metadata_div = util.find_css(self.browser, '.esdDiv').text
+        metadata_div = FINDER.css('.esdDiv').text
 
         self.assertTrue('Austria' in metadata_div)
         self.assertTrue('1A1a' in metadata_div)
@@ -80,7 +86,7 @@ class AddObservation(BrowserTestCase):
         # check saved text exists
         self.assertTrue(
             'Test observation' in
-            util.find_css(self.browser, '.esdDiv').text
+            FINDER.css('.esdDiv').text
         )
 
 
@@ -90,14 +96,14 @@ class AddQuestion(BrowserTestCase):
         """ Test sector expert can add question.
         """
         # Add questions
-        util.find_css(self.browser, '#add-question-link').click()
-        question_text_field = util.find_css(
-            self.browser, 'textarea#form-widgets-text')
+        FINDER.css('#add-question-link').click()
+        question_text_field = FINDER.css(
+            'textarea#form-widgets-text')
         question_text_field.send_keys('Test question.')
-        util.find_xpath(self.browser, '//*[@value="Save question"]').click()
+        FINDER.xpath('//*[@value="Save question"]').click()
 
         # Check question added
-        answer_content = util.find_css(self.browser, '.answerContent')
+        answer_content = FINDER.css('.answerContent')
         self.assertTrue('Test question.' in answer_content.text)
 
         # Check buttons
@@ -105,22 +111,22 @@ class AddQuestion(BrowserTestCase):
                 'Edit question', 'Upload file', 'Delete Question',
                 'Go to Conclusions', 'Request Comments',
                 'Send Question for Approval', 'Edit Key Flags'):
-            link = util.find_link(self.browser, link_name)
+            link = FINDER.link(link_name)
             self.assertTrue(link)
 
 
 class RequestComments(BrowserTestCase):
 
     def test_request_comments(self):
-        util.find_link(self.browser, 'Request Comments').click()
-        util.find_css(self.browser, '.chosen-container').click()
-        util.find_xpath(self.browser, '//*[@class="chosen-results"]/li').click()
-        util.find_xpath(self.browser, '//input[@value="Send"]').click()
+        FINDER.link('Request Comments').click()
+        FINDER.css('.chosen-container').click()
+        FINDER.xpath('//*[@class="chosen-results"]/li').click()
+        FINDER.xpath('//input[@value="Send"]').click()
 
         # Check buttons
         for link_name in (
                 'Select new Counterparts',
                 'Close Comments',
                 'Edit Key Flags'):
-            link = util.find_link(self.browser, link_name)
+            link = FINDER.link(link_name)
             self.assertTrue(link)
