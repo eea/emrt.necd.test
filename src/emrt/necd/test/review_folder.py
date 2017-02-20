@@ -5,9 +5,9 @@ from edw.seleniumtesting.common import BrowserTestCase
 
 
 def suite(browser, base_url, extra_args):
-    """ Call on review folder url providing user mapping and user accounts.
-    `` seleniumtesting http://localhost/Plone/2017 \
-        -ea roles sectorexpert acc_sectorexpert \
+    """ Call on review folder url providing user mapping and user accounts.\n
+    `` seleniumtesting http://localhost/Plone/2017 \\
+        -ea roles sectorexpert acc_sectorexpert \\
         -ea users acc_sectorexpert acc_sectorexpert_pwd
     ``
     """
@@ -22,9 +22,6 @@ def suite(browser, base_url, extra_args):
 
 class ReviewFolderTestCase(BrowserTestCase):
 
-    def setUp(self):
-        self.browser.get(self.url)
-
     @util.runas('sectorexpert')
     def test_00_review_folder(self):
         """ Test 'Save Observation' button exists
@@ -34,7 +31,6 @@ class ReviewFolderTestCase(BrowserTestCase):
         new_obs = util.find_link(self.browser, "New observation")
         self.assertEqual("New observation", new_obs.text)
 
-    @util.runas('sectorexpert')
     def test_01_add_observation(self):
         """ Test sectorexpert can add an observation.
         """
@@ -69,3 +65,23 @@ class ReviewFolderTestCase(BrowserTestCase):
             'Test observation' in
             util.find_css(self.browser, '.esdDiv').text
         )
+
+    def test_02_add_question(self):
+        # Add question
+        util.find_css(self.browser, '#add-question-link').click()
+        question_text_field = util.find_css(
+            self.browser, 'textarea#form-widgets-text')
+        question_text_field.send_keys('Test question.')
+        util.find_xpath(self.browser, '//*[@value="Save question"]').click()
+
+        # Check question added
+        answer_content = util.find_css(self.browser, '.answerContent')
+        self.assertTrue('Test question.' in answer_content.text)
+
+        # Check buttons
+        for link_name in (
+                'Edit question', 'Upload file', 'Delete Question',
+                'Go to Conclusions', 'Request Comments',
+                'Send Question for Approval', 'Edit Key Flags'):
+            link = util.find_link(self.browser, link_name)
+            self.assertTrue(link)

@@ -42,3 +42,7 @@ def find_name(browser, name):
 
 def find_link(browser, text):
     return browser.find_element_by_link_text(text)
+
+
+def find_xpath(browser, selector):
+    return browser.find_element_by_xpath(selector)

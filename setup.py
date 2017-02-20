@@ -5,7 +5,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-long_description = '\n\n'.join([
+LONG_DESCRIPTION = '\n\n'.join([
     open('README.rst').read(),
     open('CONTRIBUTORS.rst').read(),
     open('CHANGES.rst').read(),
@@ -16,7 +16,7 @@ setup(
     name='emrt.necd.test',
     version='1.0a1',
     description="Necd testing metapackage",
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
     # Get more from https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
         "Programming Language :: Python",
@@ -36,7 +36,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'setuptools',
-        'edw.seleniumtesting',	
+        'edw.seleniumtesting',
     ],
     entry_points={
         'edw.seleniumtesting': [

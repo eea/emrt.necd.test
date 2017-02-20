@@ -9,20 +9,20 @@ USER_CREDENTIALS = {
 
 
 def suite(browser, base_url):
-    """Plone logout test 
+    """Plone logout test
     """
     # setup a new suite
-    suite = unittest.TestSuite()
+    test_suite = unittest.TestSuite()
 
     for name in LogoutTestCase.my_tests():
         testcase = LogoutTestCase(name, browser, base_url)
-        suite.addTest(testcase)
+        test_suite.addTest(testcase)
 
-    return suite
+    return test_suite
 
 
 class LogoutTestCase(BrowserTestCase):
-    
+
     def setUp(self):
         self.browser.get(self.url + '/logout')
 
