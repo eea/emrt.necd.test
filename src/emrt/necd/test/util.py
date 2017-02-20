@@ -12,6 +12,8 @@ def runas(role='', user='', pwd_from='users', usr_from='roles'):
 
             password = self.extra_args[pwd_from][username]
 
+            came_from = self.browser.current_url
+
             # open login
             self.browser.get(self.url + '/login')
 
@@ -25,6 +27,8 @@ def runas(role='', user='', pwd_from='users', usr_from='roles'):
 
             # submit
             self.browser.find_element_by_name("submit").send_keys(Keys.RETURN)
+
+            self.browser.get(came_from)
 
             # call wrapped function
             return func(self)

@@ -13,29 +13,46 @@ def suite(browser, base_url, extra_args):
     """
     test_suite = unittest.TestSuite()
 
-    for name in ReviewFolderTestCase.my_tests():
-        testcase = ReviewFolderTestCase(name, browser, base_url, extra_args)
+    for name in ReviewFolder.my_tests():
+        testcase = ReviewFolder(name, browser, base_url, extra_args)
         test_suite.addTest(testcase)
+
+    for name in AddObservation.my_tests():
+        test_suite.addTest(
+            AddObservation(name, browser, base_url, extra_args)
+        )
+
+    for name in AddQuestion.my_tests():
+        test_suite.addTest(
+            AddQuestion(name, browser, base_url, extra_args)
+        )
+
+    for name in RequestComments.my_tests():
+        test_suite.addTest(
+            RequestComments(name, browser, base_url, extra_args)
+        )
 
     return test_suite
 
 
-class ReviewFolderTestCase(BrowserTestCase):
+class ReviewFolder(BrowserTestCase):
 
-    @util.runas('sectorexpert')
-    def test_00_review_folder(self):
-        """ Test 'Save Observation' button exists
-        """
+    def setUp(self):
         self.browser.get(self.url)
 
+    @util.runas('sectorexpert')
+    def test_review_folder(self):
+        """ Test 'Save Observation' button exists
+        """
         new_obs = util.find_link(self.browser, "New observation")
         self.assertEqual("New observation", new_obs.text)
 
-    def test_01_add_observation(self):
+
+class AddObservation(BrowserTestCase):
+
+    def test_add_observation(self):
         """ Test sectorexpert can add an observation.
         """
-        self.browser.get(self.url)
-
         # click new observation button
         util.find_link(self.browser, "New observation").click()
 
@@ -66,8 +83,13 @@ class ReviewFolderTestCase(BrowserTestCase):
             util.find_css(self.browser, '.esdDiv').text
         )
 
-    def test_02_add_question(self):
-        # Add question
+
+class AddQuestion(BrowserTestCase):
+
+    def test_add_question(self):
+        """ Test sector expert can add question.
+        """
+        # Add questions
         util.find_css(self.browser, '#add-question-link').click()
         question_text_field = util.find_css(
             self.browser, 'textarea#form-widgets-text')
@@ -83,5 +105,22 @@ class ReviewFolderTestCase(BrowserTestCase):
                 'Edit question', 'Upload file', 'Delete Question',
                 'Go to Conclusions', 'Request Comments',
                 'Send Question for Approval', 'Edit Key Flags'):
+            link = util.find_link(self.browser, link_name)
+            self.assertTrue(link)
+
+
+class RequestComments(BrowserTestCase):
+
+    def test_request_comments(self):
+        util.find_link(self.browser, 'Request Comments').click()
+        util.find_css(self.browser, '.chosen-container').click()
+        util.find_xpath(self.browser, '//*[@class="chosen-results"]/li').click()
+        util.find_xpath(self.browser, '//input[@value="Send"]').click()
+
+        # Check buttons
+        for link_name in (
+                'Select new Counterparts',
+                'Close Comments',
+                'Edit Key Flags'):
             link = util.find_link(self.browser, link_name)
             self.assertTrue(link)
