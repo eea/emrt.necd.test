@@ -39,6 +39,11 @@ def suite(browser, base_url, extra_args):
             EditQuestion(name, browser, base_url, extra_args)
         )
 
+    for name in EditKeyFlags.my_tests():
+        test_suite.addTest(
+            EditKeyFlags(name, browser, base_url, extra_args)
+        )
+
     for name in RequestComments.my_tests():
         test_suite.addTest(
             RequestComments(name, browser, base_url, extra_args)
@@ -148,8 +153,30 @@ class EditQuestion(BrowserTestCase):
             self.assertTrue(link)
 
 
+class EditKeyFlags(BrowserTestCase):
+    
+    def test_edit_key_flags(self):
+        """Test sector expert can edit key flags
+        """
+
+        #Edit key flags
+        FINDER.link('Edit Key Flags').click() 
+        FINDER.name('form.widgets.highlight:list').click()
+
+        #Submit form
+        FINDER.name('form.buttons.save').click()
+
+        #Expand 'Observation details'
+        FINDER.css('div.row.collapsiblePanelTitle.collapsed').click()
+
+        #Check information change
+        metadata_div = FINDER.css('.esdDiv').text
+        
+        #Check if flag was added
+        self.assertTrue('Not Estimated' in metadata_div)
+
 class RequestComments(BrowserTestCase):
-    """
+    
     def test_request_comments(self):
         FINDER.link('Request Comments').click()
         FINDER.css('.chosen-container').click()
@@ -162,4 +189,4 @@ class RequestComments(BrowserTestCase):
                 'Close Comments',
                 'Edit Key Flags'):
             link = FINDER.link(link_name)
-            self.assertTrue(link)"""
+            self.assertTrue(link)
