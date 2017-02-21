@@ -1,8 +1,10 @@
 import unittest
-
 import emrt.necd.test.util as util
-from edw.seleniumtesting.common import BrowserTestCase
 
+from edw.seleniumtesting.common import BrowserTestCase
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 FINDER = util.ElementFinder()
 
@@ -30,6 +32,11 @@ def suite(browser, base_url, extra_args):
     for name in AddQuestion.my_tests():
         test_suite.addTest(
             AddQuestion(name, browser, base_url, extra_args)
+        )
+
+    for name in EditQuestion.my_tests():
+        test_suite.addTest(
+            EditQuestion(name, browser, base_url, extra_args)
         )
 
     for name in RequestComments.my_tests():
@@ -114,8 +121,35 @@ class AddQuestion(BrowserTestCase):
             self.assertTrue(link)
 
 
-class RequestComments(BrowserTestCase):
+class EditQuestion(BrowserTestCase):
+    
+    def test_edit_question(self):
+        """Test sector expert can edit question
+        """
 
+        #Edit question
+        FINDER.link('Edit question').click()
+
+        question_text_field = WebDriverWait(self.browser, 10).until(
+                 EC.presence_of_element_located((By.ID, "form-widgets-text")))
+        question_text_field.send_keys('(edited)')
+        FINDER.xpath('//*[@id="form-buttons-save"]').click()
+
+        #Check question edited
+        edited_answer_content = FINDER.css('.answerContent')
+        self.assertTrue('(edited)Test question.' in edited_answer_content.text)
+
+        # Check buttons
+        for link_name in (
+                'Edit question', 'Upload file', 'Delete Question',
+                'Go to Conclusions', 'Request Comments',
+                'Send Question for Approval', 'Edit Key Flags'):
+            link = FINDER.link(link_name)
+            self.assertTrue(link)
+
+
+class RequestComments(BrowserTestCase):
+    """
     def test_request_comments(self):
         FINDER.link('Request Comments').click()
         FINDER.css('.chosen-container').click()
@@ -128,4 +162,4 @@ class RequestComments(BrowserTestCase):
                 'Close Comments',
                 'Edit Key Flags'):
             link = FINDER.link(link_name)
-            self.assertTrue(link)
+            self.assertTrue(link)"""
