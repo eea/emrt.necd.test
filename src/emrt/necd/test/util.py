@@ -37,7 +37,10 @@ def runas(role='', user='', pwd_from='users', usr_from='roles'):
 
 class ElementFinder(object):
 
-    def __init__(self, browser):
+    def __init__(self, browser=None):
+        self.set_browser(browser)
+
+    def set_browser(self, browser):
         self.browser = browser
 
     def css(self, selector):

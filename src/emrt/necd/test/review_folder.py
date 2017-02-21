@@ -4,7 +4,7 @@ import emrt.necd.test.util as util
 from edw.seleniumtesting.common import BrowserTestCase
 
 
-FINDER = None
+FINDER = util.ElementFinder()
 
 
 def suite(browser, base_url, extra_args):
@@ -14,8 +14,7 @@ def suite(browser, base_url, extra_args):
         -ea users acc_sectorexpert acc_sectorexpert_pwd
     ``
     """
-    global FINDER
-    FINDER = util.ElementFinder(browser)
+    FINDER.set_browser(browser)
 
     test_suite = unittest.TestSuite()
 
