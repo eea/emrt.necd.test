@@ -18,38 +18,35 @@ def suite(browser, base_url, extra_args):
     """
     FINDER.set_browser(browser)
 
-    test_suite = unittest.TestSuite()
-
-    for name in ReviewFolder.my_tests():
-        testcase = ReviewFolder(name, browser, base_url, extra_args)
-        test_suite.addTest(testcase)
-
-    for name in AddObservation.my_tests():
-        test_suite.addTest(
-            AddObservation(name, browser, base_url, extra_args)
+    params = dict(  
+        browser=browser,                                                                         
+        base_url=base_url,                                                                       
+        extra_args=extra_args                                                                    
+        )                                                                                            
+     
+    test_suite = util.TestFactory(                                                               
+        unittest.TestSuite(),                                                                    
+        **params
         )
 
-    for name in AddQuestion.my_tests():
-        test_suite.addTest(
-            AddQuestion(name, browser, base_url, extra_args)
-        )
-
-    for name in EditQuestion.my_tests():
-        test_suite.addTest(
-            EditQuestion(name, browser, base_url, extra_args)
-        )
-
-    for name in EditKeyFlags.my_tests():
-        test_suite.addTest(
-            EditKeyFlags(name, browser, base_url, extra_args)
-        )
-
-    for name in RequestComments.my_tests():
-        test_suite.addTest(
-            RequestComments(name, browser, base_url, extra_args)
-        )
-
-    return test_suite
+    test_suite.add_tests(ReviewFolder)                                                           
+                    
+    #test sectorexpert add observation                                                           
+    test_suite.add_tests(AddObservation)
+                                                                                                      
+    #test sectorexpert add question
+    test_suite.add_tests(AddQuestion)                                                            
+               
+    #test sectorexpert edit question
+    test_suite.add_tests(EditQuestion)                                                           
+                 
+    #test sectorexpert edit key flags
+    test_suite.add_tests(EditKeyFlags)
+                                                                                                      
+    #test sectorexpert request comments                                                          
+    test_suite.add_tests(RequestComments)
+    
+    return test_suite()
 
 
 class ReviewFolder(BrowserTestCase):

@@ -1,5 +1,26 @@
 from selenium.webdriver.common.keys import Keys
 
+class TestFactory(object):                                                                                                
+    
+    def __init__(self, suite, **kwargs):
+        
+        self.suite = suite
+        self.params = kwargs 
+        
+    def __call__(self): 
+        
+        return self.suite
+            
+    def add_tests(self, test_class):      
+        for name in test_class.my_tests(): 
+            self.suite.addTest(
+                test_class(
+                    name,                 
+                    self.params["browser"],
+                    self.params["base_url"],  
+                    self.params["extra_args"],
+                    )
+                ) 
 
 def runas(role='', user='', pwd_from='users', usr_from='roles'):
     def decorator(func):
