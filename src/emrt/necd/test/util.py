@@ -58,11 +58,11 @@ def runas(role='', user='', pwd_from='users', usr_from='roles'):
 
 class ElementFinder(object):
 
-    def __init__(self, browser=None):
-        self.set_browser(browser)
+    browser = None
 
-    def set_browser(self, browser):
-        self.browser = browser
+    @classmethod
+    def set_browser(cls, browser):
+        cls.browser = browser
 
     def css(self, selector):
         return self.browser.find_element_by_css_selector(selector)
