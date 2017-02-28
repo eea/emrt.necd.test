@@ -200,6 +200,9 @@ class Conclusions(BrowserTestCase):
         FINDER.link('Go to Conclusions').click()
         FINDER.name('form.buttons.save').click()
         FINDER.link('Request finalisation of the observation').click()
-        FINDER.css('.submit-widget.button-field.standardButton.defaultWFButton').click()
-    
+        
+        #Check if save button exists
+        request_fin = FINDER.xpath('//*[@value="Request finalisation of the observation"]')
+        self.assertTrue('request_fin.is_displayed()')
+        request_fin.click()
 
