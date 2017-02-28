@@ -40,8 +40,6 @@ setup(
     ],
     entry_points={
         'edw.seleniumtesting': [
-            'emrt.necd.test.login = emrt.necd.test.login:suite',
-            'emrt.necd.test.logout = emrt.necd.test.logout:suite',
             'emrt.necd.test.review_folder = emrt.necd.test.review_folder:suite',
             'emrt.necd.test.finish_observation = emrt.necd.test.finish_observation:suite',
             'emrt.necd.test.deny_observation = emrt.necd.test.deny_observation:suite',
