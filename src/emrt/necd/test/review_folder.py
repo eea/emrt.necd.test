@@ -200,6 +200,6 @@ class Conclusions(BrowserTestCase):
         FINDER.link('Go to Conclusions').click()
         FINDER.name('form.buttons.save').click()
         FINDER.link('Request finalisation of the observation').click()
-        FINDER.css('#form-buttons-526571756573742066696e616c69736174696f6e206f6620746865206f62736572766174696f6e').click()
+        FINDER.css('.submit-widget.button-field.standardButton.defaultWFButton').click()
     
 
