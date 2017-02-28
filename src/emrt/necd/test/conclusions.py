@@ -8,36 +8,6 @@ from selenium.webdriver.common.by import By
 
 FINDER = util.ElementFinder()
 
-def suite(browser, base_url, extra_args):
-    """ Call on review folder url providing user mapping and user accounts.\n
-    `` seleniumtesting http://localhost/Plone/2017 \\
-        -ea roles sectorexpert acc_sectorexpert \\
-        -ea users acc_sectorexpert acc_sectorexpert_pwd
-    ``
-    """
-    FINDER.set_browser(browser)
-
-    params = dict(  
-        browser=browser,                                                                         
-        base_url=base_url,                                                                       
-        extra_args=extra_args                                                                    
-        )                                                                                            
-     
-    test_suite = util.TestFactory(                                                               
-        unittest.TestSuite(),                                                                    
-        **params
-        )
-    
-    test_suite.add_tests(ObservationConclusion) 
-    
-    #Add test for finishing observation
-    test_suite.add_tests(FinishObservation)
-
-    #Add test for denying observation
-    test_suite.add_tests(DenyObservation)
-
-    return test_suite()
-
 class ObservationConclusion(BrowserTestCase):
 
     def setUp(self):
