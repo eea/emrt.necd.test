@@ -195,7 +195,6 @@ class Conclusions(BrowserTestCase):
 
     def test_go_to_conclusions(self):
         
-        #import pdb;pdb.set_trace()
         FINDER.link('Close Comments').click()
         FINDER.link('Go to Conclusions').click()
         FINDER.name('form.buttons.save').click()
