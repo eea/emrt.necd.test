@@ -32,8 +32,11 @@ def suite(browser, base_url, extra_args):
     
     test_suite.add_tests(ObservationConclusion) 
     
-    #Add test for finishing observation
-    test_suite.add_tests(FinishObservation)
+#    #Add test for finishing observation
+#    test_suite.add_tests(FinishObservation)
+
+    #Add test for denying observation
+    test_suite.add_tests(DenyObservation)
 
     return test_suite()
 
@@ -56,16 +59,41 @@ class ObservationConclusion(BrowserTestCase):
         conclusions_tab.click()
 
 
-class FinishObservation(BrowserTestCase):
+#class FinishObservation(BrowserTestCase):
+#
+#    def test_finish_observation(self):
+#        """Test leadreviewer can finish observation
+#        """
+#        
+#        came_from = self.url    
+#
+#        #click finish observation button
+#        FINDER.link("Finish Observation").click()
+#
+#        #go back to observation listing
+#        self.browser.get(came_from)
+#
+#        #check if observation has been finalised
+#        row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]/td[6]/span')
+#
+#        self.assertEqual("Finalised", row_one.text)
 
-    def test_finish_observation(self):
-        """Test leadreviewer can finish observation
+
+class DenyObservation(BrowserTestCase):
+
+    def test_deny_observation(self):
+        """Test leadreviewer can deny observation
         """
-        
+
         came_from = self.url    
 
-        #click finish observation button
-        FINDER.link("Finish Observation").click()
+        #click deny observation button
+        FINDER.link("Deny finishing observation").click()
+
+        #check if submit button exists
+        deny_btn = FINDER.xpath('//*[@value="Deny finishing observation"]')
+        self.assertTrue('deny_btn.is_displayed()')
+        deny_btn.click()
 
         #go back to observation listing
         self.browser.get(came_from)
@@ -73,4 +101,4 @@ class FinishObservation(BrowserTestCase):
         #check if observation has been finalised
         row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]/td[6]/span')
 
-        self.assertEqual("Finalised", row_one.text)
+        self.assertEqual("Conclusions", row_one.text)
