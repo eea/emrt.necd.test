@@ -1,8 +1,6 @@
 import unittest
 import emrt.necd.test.util as util
 
-import time
-
 from edw.seleniumtesting.common import BrowserTestCase
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -32,8 +30,8 @@ def suite(browser, base_url, extra_args):
     
     test_suite.add_tests(ObservationConclusion) 
     
-#    #Add test for finishing observation
-#    test_suite.add_tests(FinishObservation)
+    #Add test for finishing observation
+    test_suite.add_tests(FinishObservation)
 
     #Add test for denying observation
     test_suite.add_tests(DenyObservation)
@@ -59,24 +57,24 @@ class ObservationConclusion(BrowserTestCase):
         conclusions_tab.click()
 
 
-#class FinishObservation(BrowserTestCase):
-#
-#    def test_finish_observation(self):
-#        """Test leadreviewer can finish observation
-#        """
-#        
-#        came_from = self.url    
-#
-#        #click finish observation button
-#        FINDER.link("Finish Observation").click()
-#
-#        #go back to observation listing
-#        self.browser.get(came_from)
-#
-#        #check if observation has been finalised
-#        row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]/td[6]/span')
-#
-#        self.assertEqual("Finalised", row_one.text)
+class FinishObservation(BrowserTestCase):
+
+    def test_finish_observation(self):
+        """Test leadreviewer can finish observation
+        """
+        
+        came_from = self.url    
+        
+        #click finish observation button
+        FINDER.link("Finish Observation").click()
+
+        #go back to observation listing
+        self.browser.get(came_from)
+
+        #check if observation has been finalised
+        row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]/td[6]/span')
+
+        self.assertEqual("Finalised", row_one.text)
 
 
 class DenyObservation(BrowserTestCase):
