@@ -12,9 +12,11 @@ FINDER = util.ElementFinder()
 
 def suite(browser, base_url, extra_args):
     """ Call on review folder url providing user mapping and user accounts.\n
-    `` seleniumtesting http://localhost/Plone/2017 \\
+    `` seleniumtesting http://localhost/Plone/2017 emrt.necd.test.deny_observation\\
         -ea roles sectorexpert acc_sectorexpert \\
-        -ea users acc_sectorexpert acc_sectorexpert_pwd
+        -ea users acc_sectorexpert acc_sectorexpert_pwd \\
+        -ea roles leadreviewer acc_leadreviewer \\
+        -ea users acc_leadreviewer acc_leadreviewer_pwd
     ``
     """
     FINDER.set_browser(browser)
