@@ -18,32 +18,32 @@ def suite(browser, base_url, extra_args):
     """
     FINDER.set_browser(browser)
 
-    params = dict(  
-        browser=browser,                                                                         
-        base_url=base_url,                                                                       
-        extra_args=extra_args                                                                    
-        )                                                                                            
-     
-    test_suite = util.TestFactory(                                                               
-        unittest.TestSuite(),                                                                    
+    params = dict(
+        browser=browser,
+        base_url=base_url,
+        extra_args=extra_args
+        )
+
+    test_suite = util.TestFactory(
+        unittest.TestSuite(),
         **params
         )
 
-    test_suite.add_tests(ReviewFolder)                                                           
-                    
-    #test sectorexpert add observation                                                           
+    test_suite.add_tests(ReviewFolder)
+
+    #test sectorexpert add observation
     test_suite.add_tests(AddObservation)
-                                                                                                      
+
     #test sectorexpert add question
-    test_suite.add_tests(AddQuestion)                                                            
-               
+    test_suite.add_tests(AddQuestion)
+
     #test sectorexpert edit question
-    test_suite.add_tests(EditQuestion)                                                           
-                 
+    test_suite.add_tests(EditQuestion)
+
     #test sectorexpert edit key flags
     test_suite.add_tests(EditKeyFlags)
-                                                                                                      
-    #test sectorexpert request comments                                                          
+
+    #test sectorexpert request comments
     test_suite.add_tests(RequestComments)
 
     #test sectorexpert can request finalisation of the observation
@@ -86,8 +86,8 @@ class AddObservation(BrowserTestCase):
         metadata_div = FINDER.css('.esdDiv').text
 
         self.assertTrue('Austria' in metadata_div)
-        self.assertTrue('1A1a' in metadata_div)
-        self.assertTrue('NOx' in metadata_div)
+        self.assertTrue('11A' in metadata_div)
+        self.assertTrue('SO2' in metadata_div)
         self.assertTrue('2017' in metadata_div)
 
         # expand collapsed elements so the next assertion works
@@ -127,7 +127,7 @@ class AddQuestion(BrowserTestCase):
 
 
 class EditQuestion(BrowserTestCase):
-    
+
     def test_edit_question(self):
         """Test sector expert can edit question
         """
@@ -154,13 +154,13 @@ class EditQuestion(BrowserTestCase):
 
 
 class EditKeyFlags(BrowserTestCase):
-    
+
     def test_edit_key_flags(self):
         """Test sector expert can edit key flags
         """
 
         #Edit key flags
-        FINDER.link('Edit Key Flags').click() 
+        FINDER.link('Edit Key Flags').click()
         FINDER.name('form.widgets.highlight:list').click()
 
         #Submit form
@@ -171,12 +171,12 @@ class EditKeyFlags(BrowserTestCase):
 
         #Check information change
         metadata_div = FINDER.css('.esdDiv').text
-        
+
         #Check if flag was added
         self.assertTrue('Not Estimated' in metadata_div)
 
 class RequestComments(BrowserTestCase):
-    
+
     def test_request_comments(self):
         FINDER.link('Request Comments').click()
         FINDER.css('.chosen-container').click()
@@ -194,12 +194,12 @@ class RequestComments(BrowserTestCase):
 class Conclusions(BrowserTestCase):
 
     def test_go_to_conclusions(self):
-        
+
         FINDER.link('Close Comments').click()
         FINDER.link('Go to Conclusions').click()
         FINDER.name('form.buttons.save').click()
         FINDER.link('Request finalisation of the observation').click()
-        
+
         #Check if save button exists
         request_fin = FINDER.xpath('//*[@value="Request finalisation of the observation"]')
         self.assertTrue('request_fin.is_displayed()')

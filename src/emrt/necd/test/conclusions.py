@@ -18,11 +18,13 @@ class ObservationConclusion(BrowserTestCase):
         """ Test 'Conclusions' workflow
         """
 
+        obs_selector = '//*[@id="observations-table"]/tbody/tr[1]/td[1]/a'
         first_obs = WebDriverWait(self.browser, 10).until(
-                 EC.presence_of_element_located((By.XPATH, '//*[@id="observations-table"]/tbody/tr[1]/td[1]/a')))
+            EC.presence_of_element_located((By.XPATH, obs_selector))
+        )
         first_obs.click()
-        
-        conclusions_tab = FINDER.link("Conclusions") 
+
+        conclusions_tab = FINDER.link("Conclusions")
         self.assertEqual("Conclusions", conclusions_tab.text)
         conclusions_tab.click()
 
@@ -32,16 +34,16 @@ class FinishObservation(BrowserTestCase):
     def test_finish_observation(self):
         """Test leadreviewer can finish observation
         """
-        
-        came_from = self.url    
-        
-        #click finish observation button
+
+        came_from = self.url
+
+        # click finish observation button
         FINDER.link("Finish Observation").click()
 
-        #go back to observation listing
+        # go back to observation listing
         self.browser.get(came_from)
 
-        #check if observation has been finalised
+        # check if observation has been finalised
         row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]/td[6]/span')
 
         self.assertEqual("Finalised", row_one.text)
@@ -53,20 +55,28 @@ class DenyObservation(BrowserTestCase):
         """Test leadreviewer can deny observation
         """
 
-        came_from = self.url    
+        came_from = self.url
 
-        #click deny observation button
+
+        # click Conclusions tab
+        FINDER.link('Conclusions').click()
+
+        # click deny observation button
         FINDER.link("Deny finishing observation").click()
 
-        #check if submit button exists
+        # add a reason
+        reason_field = FINDER.css('textarea#form-widgets-comments')
+        reason_field.send_keys('DENIED!')
+
+        # check if submit button exists
         deny_btn = FINDER.xpath('//*[@value="Deny finishing observation"]')
-        self.assertTrue('deny_btn.is_displayed()')
+        self.assertTrue(deny_btn.is_displayed())
         deny_btn.click()
 
-        #go back to observation listing
+        # go back to observation listing
         self.browser.get(came_from)
 
-        #check if observation has been finalised
+        # check if observation has been finalised
         row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]/td[6]/span')
 
         self.assertEqual("Conclusions", row_one.text)
