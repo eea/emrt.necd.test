@@ -161,7 +161,13 @@ class EditKeyFlags(BrowserTestCase):
 
         #Edit key flags
         FINDER.link('Edit Key Flags').click()
-        FINDER.name('form.widgets.highlight:list').click()
+        checkbox_flag = FINDER.name('form.widgets.highlight:list')
+        checkbox_flag.click()
+        label_flag = FINDER.css(
+            'label[for="{}"]'.format(
+                checkbox_flag.get_attribute('id')
+            )
+        ).text.strip()
 
         #Submit form
         FINDER.name('form.buttons.save').click()
@@ -173,7 +179,7 @@ class EditKeyFlags(BrowserTestCase):
         metadata_div = FINDER.css('.esdDiv').text
 
         #Check if flag was added
-        self.assertTrue('Not Estimated' in metadata_div)
+        self.assertTrue(label_flag in metadata_div)
 
 class RequestComments(BrowserTestCase):
 
