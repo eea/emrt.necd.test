@@ -186,7 +186,9 @@ class RequestComments(BrowserTestCase):
     def test_request_comments(self):
         FINDER.link('Request Comments').click()
         FINDER.css('.chosen-container').click()
-        FINDER.xpath('//*[@class="chosen-results"]/li').click()
+        FINDER.xpath(
+            '//*[@class="chosen-results"]/li[contains(text(), "TERT NECD")]'
+        ).click()
         FINDER.xpath('//input[@value="Send"]').click()
 
         # Check buttons
