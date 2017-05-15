@@ -142,7 +142,7 @@ class EditQuestion(BrowserTestCase):
 
         #Check question edited
         edited_answer_content = FINDER.css('.answerContent')
-        self.assertTrue('(edited)Test question.' in edited_answer_content.text)
+        self.assertTrue('(edited)' in edited_answer_content.text)
 
         # Check buttons
         for link_name in (
