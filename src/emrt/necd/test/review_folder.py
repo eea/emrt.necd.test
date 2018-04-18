@@ -1,10 +1,9 @@
-import unittest
 import emrt.necd.test.util as util
+import time
+import unittest
 
 from edw.seleniumtesting.common import BrowserTestCase
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+
 
 FINDER = util.ElementFinder()
 
@@ -86,7 +85,7 @@ class AddObservation(BrowserTestCase):
         metadata_div = FINDER.css('.esdDiv').text
 
         self.assertTrue('Austria' in metadata_div)
-        self.assertTrue('11A' in metadata_div)
+        self.assertTrue('1A1' in metadata_div)
         self.assertTrue('SO2' in metadata_div)
         self.assertTrue('2017' in metadata_div)
 
@@ -125,19 +124,21 @@ class AddQuestion(BrowserTestCase):
             link = FINDER.link(link_name)
             self.assertTrue(link)
 
-
 class EditQuestion(BrowserTestCase):
 
     def test_edit_question(self):
         """Test sector expert can edit question
         """
-
         #Edit question
         FINDER.link('Edit question').click()
 
-        question_text_field = WebDriverWait(self.browser, 10).until(
-                 EC.presence_of_element_located((By.ID, "form-widgets-text")))
-        question_text_field.send_keys('(edited)')
+        # Focus on active element
+        time.sleep(0.5)
+        popup = self.browser.switch_to.active_element
+        popup.send_keys('(edited)')
+
+        # Focus back to page content
+        self.browser.switch_to.default_content()
         FINDER.xpath('//*[@id="form-buttons-save"]').click()
 
         #Check question edited
@@ -205,11 +206,10 @@ class Conclusions(BrowserTestCase):
 
         FINDER.link('Close Comments').click()
         FINDER.link('Go to Conclusions').click()
-        FINDER.name('form.buttons.save').click()
+        FINDER.css('.formControls > input').click()
         FINDER.link('Request finalisation of the observation').click()
 
         #Check if save button exists
         request_fin = FINDER.xpath('//*[@value="Request finalisation of the observation"]')
         self.assertTrue('request_fin.is_displayed()')
         request_fin.click()
-

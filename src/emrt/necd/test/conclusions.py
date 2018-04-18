@@ -1,4 +1,4 @@
-import unittest
+import time
 import emrt.necd.test.util as util
 
 from edw.seleniumtesting.common import BrowserTestCase
@@ -24,7 +24,11 @@ class ObservationConclusion(BrowserTestCase):
         )
         first_obs.click()
 
+        # Switch to observation window
+        obs_window = FINDER.browser.window_handles[1]
+        self.browser.switch_to.window(obs_window)
         conclusions_tab = FINDER.link("Conclusions")
+
         self.assertEqual("Conclusions", conclusions_tab.text)
         conclusions_tab.click()
 
@@ -34,7 +38,6 @@ class FinishObservation(BrowserTestCase):
     def test_finish_observation(self):
         """Test leadreviewer can finish observation
         """
-
         came_from = self.url
 
         # click finish observation button
@@ -44,9 +47,8 @@ class FinishObservation(BrowserTestCase):
         self.browser.get(came_from)
 
         # check if observation has been finalised
-        row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]/td[6]/span')
-
-        self.assertEqual("Finalised", row_one.text)
+        row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]')
+        self.assertTrue("Finalised" in row_one.text)
 
 
 class DenyObservation(BrowserTestCase):
@@ -54,9 +56,7 @@ class DenyObservation(BrowserTestCase):
     def test_deny_observation(self):
         """Test leadreviewer can deny observation
         """
-
         came_from = self.url
-
 
         # click Conclusions tab
         FINDER.link('Conclusions').click()
@@ -77,6 +77,5 @@ class DenyObservation(BrowserTestCase):
         self.browser.get(came_from)
 
         # check if observation has been finalised
-        row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]/td[6]/span')
-
-        self.assertEqual("Conclusions", row_one.text)
+        row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]')
+        self.assertTrue("Conclusions" in row_one.text)
