@@ -1,4 +1,3 @@
-import time
 import emrt.necd.test.util as util
 
 from edw.seleniumtesting.common import BrowserTestCase

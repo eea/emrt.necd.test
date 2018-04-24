@@ -1,26 +1,26 @@
 from selenium.webdriver.common.keys import Keys
 
-class TestFactory(object):                                                                                                
-    
+class TestFactory(object):
+
     def __init__(self, suite, **kwargs):
-        
+
         self.suite = suite
-        self.params = kwargs 
-        
-    def __call__(self): 
-        
+        self.params = kwargs
+
+    def __call__(self):
+
         return self.suite
-            
-    def add_tests(self, test_class):      
-        for name in test_class.my_tests(): 
+
+    def add_tests(self, test_class):
+        for name in test_class.my_tests():
             self.suite.addTest(
                 test_class(
-                    name,                 
+                    name,
                     self.params["browser"],
-                    self.params["base_url"],  
+                    self.params["base_url"],
                     self.params["extra_args"],
                     )
-                ) 
+                )
 
 def runas(role='', user='', pwd_from='users', usr_from='roles'):
     def decorator(func):
@@ -56,8 +56,13 @@ def runas(role='', user='', pwd_from='users', usr_from='roles'):
         return wrapped
     return decorator
 
-class ElementFinder(object):
 
+def checks_link_names(obj, finder, link_list):
+    for link_name in link_list:
+        link = finder.link(link_name)
+
+
+class ElementFinder(object):
     browser = None
 
     @classmethod

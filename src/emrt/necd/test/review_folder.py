@@ -116,13 +116,14 @@ class AddQuestion(BrowserTestCase):
         answer_content = FINDER.css('.answerContent')
         self.assertTrue('Test question.' in answer_content.text)
 
+        buttons = [
+            'Edit question', 'Upload file', 'Delete Question',
+            'Go to Conclusions', 'Request Comments',
+            'Send Question for Approval', 'Edit Key Flags'
+        ]
+
         # Check buttons
-        for link_name in (
-                'Edit question', 'Upload file', 'Delete Question',
-                'Go to Conclusions', 'Request Comments',
-                'Send Question for Approval', 'Edit Key Flags'):
-            link = FINDER.link(link_name)
-            self.assertTrue(link)
+        util.checks_link_names(self, FINDER, buttons)
 
 class EditQuestion(BrowserTestCase):
 
@@ -139,19 +140,32 @@ class EditQuestion(BrowserTestCase):
 
         # Focus back to page content
         self.browser.switch_to.default_content()
+        time.sleep(0.5)
+
         FINDER.xpath('//*[@id="form-buttons-save"]').click()
 
         #Check question edited
         edited_answer_content = FINDER.css('.answerContent')
         self.assertTrue('(edited)' in edited_answer_content.text)
 
+        buttons = [
+            'Edit question', 'Upload file', 'Delete Question',
+            'Go to Conclusions', 'Request Comments',
+            'Send Question for Approval', 'Edit Key Flags'
+        ]
         # Check buttons
-        for link_name in (
-                'Edit question', 'Upload file', 'Delete Question',
-                'Go to Conclusions', 'Request Comments',
-                'Send Question for Approval', 'Edit Key Flags'):
-            link = FINDER.link(link_name)
-            self.assertTrue(link)
+        util.checks_link_names(self, FINDER, buttons)
+
+
+class SendQuestionForApproval(BrowserTestCase):
+
+    def test_send_question_for_approval(self):
+
+        button = FINDER.link('Send Question for Approval')
+        button.click()
+
+        buttons = ['Recall Question', 'Edit Key Flags']
+        util.checks_link_names(self, FINDER, buttons)
 
 
 class EditKeyFlags(BrowserTestCase):
@@ -159,7 +173,6 @@ class EditKeyFlags(BrowserTestCase):
     def test_edit_key_flags(self):
         """Test sector expert can edit key flags
         """
-
         #Edit key flags
         FINDER.link('Edit Key Flags').click()
         checkbox_flag = FINDER.name('form.widgets.highlight:list')
@@ -192,13 +205,12 @@ class RequestComments(BrowserTestCase):
         ).click()
         FINDER.xpath('//input[@value="Send"]').click()
 
+        buttons = [
+            'Select new Counterparts', 'Close Comments', 'Edit Key Flags'
+        ]
         # Check buttons
-        for link_name in (
-                'Select new Counterparts',
-                'Close Comments',
-                'Edit Key Flags'):
-            link = FINDER.link(link_name)
-            self.assertTrue(link)
+        util.checks_link_names(self, FINDER, buttons)
+
 
 class Conclusions(BrowserTestCase):
 
