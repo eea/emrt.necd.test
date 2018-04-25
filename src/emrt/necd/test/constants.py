@@ -12,6 +12,10 @@ SE_COUNTERPART_COMMENTS = [
     'Select new Counterparts', 'Close Comments', 'Edit Key Flags'
 ]
 
+SE_ANSWERED = ['Acknowledge Answer', 'Edit Key Flags']
+
+SE_CLOSED = ['Add follow up question', 'Add Conclusions', 'Edit Key Flags']
+
 LR_PENDING = SE_DRAFTED = ['Recall Question', 'Edit Key Flags']
 
 LR_DRAFTED = [

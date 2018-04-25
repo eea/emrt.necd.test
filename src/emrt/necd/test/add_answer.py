@@ -1,6 +1,7 @@
 import emrt.necd.test.constants as constants
 import emrt.necd.test.review_folder as se
 import emrt.necd.test.util as util
+import time
 import unittest
 
 from edw.seleniumtesting.common import BrowserTestCase
@@ -54,8 +55,11 @@ def suite(browser, base_url, extra_args):
     # test leadreviewer approves question and sends to MSE
     test_suite.add_tests(ApproveQuestionAndSend)
 
-    # test msexpert creates and submits an answer
+    # test msauthority creates and submits an answer
     test_suite.add_tests(CreateAnswer)
+
+    # test sectorexpert acknowledges answer
+    test_suite.add_tests(AcknowledgeAnswer)
 
     return test_suite()
 
@@ -71,7 +75,6 @@ class ApproveQuestionAndSend(BrowserTestCase):
         FINDER.link('Approve question and send').click()
 
         # Check buttons after approving question
-
         util.checks_link_names(self, FINDER, constants.LR_PENDING)
 
 
@@ -81,13 +84,50 @@ class CreateAnswer(BrowserTestCase):
     def test_create_and_submit_answer(self):
         util.checks_link_names(self, FINDER, constants.MSA_PENDING)
 
+        input = "Test answer."
         FINDER.link('Create answer').click()
-        FINDER.css("#form-widgets-text").send_keys("Test answer.")
+        FINDER.css("#form-widgets-text").send_keys(input)
         FINDER.css('.formControls input').click()
+
+        answer = FINDER.css('.commentanswer > .answerContent')
+        self.assertEqual(answer.text, input)
 
         util.checks_link_names(self, FINDER,
                                constants.MSA_PENDING_ANSWER_DRAFTING)
 
+        FINDER.link('Edit answer').click()
+        time.sleep(0.5)
+        FINDER.css('#form-widgets-text').send_keys("(edited)")
+        FINDER.xpath('//*[@id="form-buttons-save"]').click()
+        edited_answer = FINDER.css('.commentanswer > .answerContent')
+        self.assertEqual(edited_answer.text, '(edited)'+input)
+
         FINDER.link('Submit Answer').click()
 
         FINDER.link("Recall")
+
+
+class AcknowledgeAnswer(BrowserTestCase):
+
+     @util.runas('sectorexpert')
+     def test_acknowledge_answer(self):
+
+        util.checks_link_names(self, FINDER, constants.SE_ANSWERED)
+        FINDER.link('Acknowledge Answer').click()
+
+        util.checks_link_names(self, FINDER, constants.SE_CLOSED)
+
+
+class AddFollowUpQuestion(BrowserTestCase):
+
+    def test_add_followup(self):
+        FINDER.link('Add follow up question').click()
+
+        time.sleep(0.5)
+        FINDER.css('#form-widgets-text').send_keys("Test follow up question.")
+        FINDER.css('.formControls input').click()
+
+        followup = FINDER.xpath("(//div[@class='answerContent'])[3]")
+        self.assertEqual(followup.text, "Test follow up question.")
+
+        util.checks_link_names(self, FINDER, constants.SE_DRAFT)
