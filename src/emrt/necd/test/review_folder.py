@@ -1,3 +1,4 @@
+import emrt.necd.test.constants as constants
 import emrt.necd.test.util as util
 import time
 import unittest
@@ -99,6 +100,8 @@ class AddObservation(BrowserTestCase):
             FINDER.css('.esdDiv').text
         )
 
+        util.checks_link_names(self, FINDER, constants.SE_DRAFT_OBSERVATION)
+
 
 class AddQuestion(BrowserTestCase):
 
@@ -116,14 +119,8 @@ class AddQuestion(BrowserTestCase):
         answer_content = FINDER.css('.answerContent')
         self.assertTrue('Test question.' in answer_content.text)
 
-        buttons = [
-            'Edit question', 'Upload file', 'Delete Question',
-            'Go to Conclusions', 'Request Comments',
-            'Send Question for Approval', 'Edit Key Flags'
-        ]
-
         # Check buttons
-        util.checks_link_names(self, FINDER, buttons)
+        util.checks_link_names(self, FINDER, constants.SE_DRAFT)
 
 class EditQuestion(BrowserTestCase):
 
@@ -148,13 +145,8 @@ class EditQuestion(BrowserTestCase):
         edited_answer_content = FINDER.css('.answerContent')
         self.assertTrue('(edited)' in edited_answer_content.text)
 
-        buttons = [
-            'Edit question', 'Upload file', 'Delete Question',
-            'Go to Conclusions', 'Request Comments',
-            'Send Question for Approval', 'Edit Key Flags'
-        ]
         # Check buttons
-        util.checks_link_names(self, FINDER, buttons)
+        util.checks_link_names(self, FINDER, constants.SE_DRAFT)
 
 
 class SendQuestionForApproval(BrowserTestCase):
@@ -163,9 +155,7 @@ class SendQuestionForApproval(BrowserTestCase):
 
         button = FINDER.link('Send Question for Approval')
         button.click()
-
-        buttons = ['Recall Question', 'Edit Key Flags']
-        util.checks_link_names(self, FINDER, buttons)
+        util.checks_link_names(self, FINDER, constants.SE_DRAFTED)
 
 
 class EditKeyFlags(BrowserTestCase):
@@ -204,12 +194,8 @@ class RequestComments(BrowserTestCase):
             '//*[@class="chosen-results"]/li[contains(text(), "TERT NECD")]'
         ).click()
         FINDER.xpath('//input[@value="Send"]').click()
-
-        buttons = [
-            'Select new Counterparts', 'Close Comments', 'Edit Key Flags'
-        ]
         # Check buttons
-        util.checks_link_names(self, FINDER, buttons)
+        util.checks_link_names(self, FINDER, constants.SE_COUNTERPART_COMMENTS)
 
 
 class Conclusions(BrowserTestCase):
@@ -218,6 +204,7 @@ class Conclusions(BrowserTestCase):
 
         FINDER.link('Close Comments').click()
         FINDER.link('Go to Conclusions').click()
+        time.sleep(1)
         FINDER.css('.formControls > input').click()
         FINDER.link('Request finalisation of the observation').click()
 

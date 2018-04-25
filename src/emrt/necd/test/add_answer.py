@@ -1,3 +1,4 @@
+import emrt.necd.test.constants as constants
 import emrt.necd.test.review_folder as se
 import emrt.necd.test.util as util
 import unittest
@@ -64,42 +65,29 @@ class ApproveQuestionAndSend(BrowserTestCase):
     @util.runas('leadreviewer')
     def test_approve_question_and_send(self):
 
-        # TODO: make constants with buttons available for each role in each state of the workflow
-
-        buttons = [
-            'Edit question', 'Upload file', 'Approve question and send',
-            'Go to Conclusions', 'Ask SE to redraft', 'Edit Key Flags'
-        ]
-
         # Check buttons for LR
-        util.checks_link_names(self, FINDER, buttons)
+        util.checks_link_names(self, FINDER, constants.LR_DRAFTED)
 
         FINDER.link('Approve question and send').click()
 
         # Check buttons after approving question
-        buttons = [buttons[-1]]
-        buttons.append('Recall Question')
 
-        util.checks_link_names(self, FINDER, buttons)
+        util.checks_link_names(self, FINDER, constants.LR_PENDING)
 
 
 class CreateAnswer(BrowserTestCase):
 
     @util.runas('msauthority')
     def test_create_and_submit_answer(self):
-
-        buttons = ['Create answer', 'Request input for answer']
-        util.checks_link_names(self, FINDER, buttons)
+        util.checks_link_names(self, FINDER, constants.MSA_PENDING)
 
         FINDER.link('Create answer').click()
         FINDER.css("#form-widgets-text").send_keys("Test answer.")
         FINDER.css('.formControls input').click()
 
-        buttons = [
-            'Edit answer', 'Upload file', 'Submit Answer', 'Request Comments'
-        ]
-        util.checks_link_names(self, FINDER, buttons)
+        util.checks_link_names(self, FINDER,
+                               constants.MSA_PENDING_ANSWER_DRAFTING)
 
         FINDER.link('Submit Answer').click()
 
-        import pdb; pdb.set_trace()
+        FINDER.link("Recall")
