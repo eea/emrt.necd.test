@@ -45,6 +45,7 @@ setup(
             'emrt.necd.test.deny_observation = emrt.necd.test.deny_observation:suite',
             'emrt.necd.test.add_answer = emrt.necd.test.add_answer:suite',
             'emrt.necd.test.finish_observation_lr = emrt.necd.test.finish_observation_lr:suite',
+            'emrt.necd.test.ask_to_redraft = emrt.necd.test.ask_to_redraft:suite',
         ]
     }
 )
