@@ -140,6 +140,7 @@ class EditQuestion(BrowserTestCase):
         time.sleep(0.5)
 
         FINDER.xpath('//*[@id="form-buttons-save"]').click()
+        time.sleep(1)
 
         #Check question edited
         edited_answer_content = FINDER.css('.answerContent')

@@ -16,6 +16,12 @@ SE_ANSWERED = ['Acknowledge Answer', 'Edit Key Flags']
 
 SE_CLOSED = ['Add follow up question', 'Add Conclusions', 'Edit Key Flags']
 
+SE_CONCLUSION = [
+    'Edit conclusion', 'Upload file', 'Edit Key Flags',
+    'Request finalisation of the observation', 'Reopen Q&A Chat',
+    'Request comments'
+]
+
 LR_PENDING = SE_DRAFTED = ['Recall Question', 'Edit Key Flags']
 
 LR_DRAFTED = [

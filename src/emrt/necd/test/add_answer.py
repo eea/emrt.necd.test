@@ -61,6 +61,9 @@ def suite(browser, base_url, extra_args):
     # test sectorexpert acknowledges answer
     test_suite.add_tests(AcknowledgeAnswer)
 
+    # test sector expert adds followup question
+    test_suite.add_tests(AddFollowUpQuestion)
+
     return test_suite()
 
 
