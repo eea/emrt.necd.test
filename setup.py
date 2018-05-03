@@ -47,6 +47,8 @@ setup(
             'emrt.necd.test.finish_observation_lr = emrt.necd.test.finish_observation_lr:suite',
             'emrt.necd.test.ask_to_redraft = emrt.necd.test.ask_to_redraft:suite',
             'emrt.necd.test.add_conclusions = emrt.necd.test.add_conclusions:suite',
+            'emrt.necd.test.setup_tests = emrt.necd.test.setup_tests:suite',
+            'emrt.necd.test.remove_test_site = emrt.necd.test.remove_test_site:suite',
         ]
     }
 )

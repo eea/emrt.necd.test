@@ -13,8 +13,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-from selenium.common.exceptions import StaleElementReferenceException
-
 
 FINDER = util.ElementFinder()
 
@@ -92,3 +90,9 @@ class AddConclusions(BrowserTestCase):
             EC.presence_of_element_located((By.LINK_TEXT, 'Conclusions'))
         )
         print(text)
+
+
+class RemoveTestSite(BrowserTestCase):
+
+    def test_remove_site(self):
+        pass
