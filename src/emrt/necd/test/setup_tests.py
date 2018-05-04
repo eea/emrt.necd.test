@@ -47,11 +47,12 @@ def suite(browser, base_url, extra_args):
 class AddPloneSite(BrowserTestCase):
 
     def setUp(self):
-
         pos = self.url.rfind("/")
         self.browser.get(self.url[:pos])
 
     def test_add_plone_site(self):
+        """Test zope user adds plone site for tests
+        """
         base_url = self.browser.current_url
 
         usr, pwd = list(self.extra_args["zope_user"].items())[0]
@@ -78,6 +79,8 @@ class AddPloneSite(BrowserTestCase):
 class SetupLDAPPlugin(BrowserTestCase):
 
     def test_setup_ldap_plugin(self):
+        """Test zope user sets the manager DN settings
+        """
 
         came_from = self.browser.current_url
 
@@ -108,6 +111,8 @@ class SetupLDAPPlugin(BrowserTestCase):
 class AddReviewFolder(BrowserTestCase):
 
     def test_add_review_folder(self):
+        """Test admin adds a review folder
+        """
         # Add a new ReviewFolder
         FINDER.xpath(
             '//*[@id="plone-contentmenu-factories"]/dt/a/span[2]'
@@ -125,7 +130,8 @@ class AddReviewFolder(BrowserTestCase):
 class SetupReviewFolderWorkflow(BrowserTestCase):
 
     def test_setup_workflow(self):
-
+        """Test admin sets the workflow state for starting the review
+        """
         # publish the ReviewFolder
         FINDER.css(".state-private + span").click()
         FINDER.css("#workflow-transition-publish").click()

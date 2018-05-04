@@ -79,8 +79,9 @@ def suite(browser, base_url, extra_args):
 
 class AddConclusions(BrowserTestCase):
 
-
     def test_add_conclusions(self):
+        """Test sector expert adds conclusion
+        """
 
         FINDER.link('Add Conclusions').click()
         time.sleep(1)

@@ -74,6 +74,8 @@ class ApproveQuestionAndSend(BrowserTestCase):
 
     @util.runas('leadreviewer')
     def test_approve_question_and_send(self):
+        """Test leadreaviewer approves question and sends it to msauthority
+        """
 
         # Check buttons for LR
         util.checks_link_names(self, FINDER, constants.LR_DRAFTED)
@@ -88,6 +90,8 @@ class CreateAnswer(BrowserTestCase):
 
     @util.runas('msauthority')
     def test_create_and_submit_answer(self):
+        """Test msauthority creates answer and submits it
+        """
         util.checks_link_names(self, FINDER, constants.MSA_PENDING)
 
         input = "Test answer."
@@ -117,6 +121,8 @@ class AcknowledgeAnswer(BrowserTestCase):
 
      @util.runas('sectorexpert')
      def test_acknowledge_answer(self):
+        """Test sector expert acknowledges answer
+        """
 
         util.checks_link_names(self, FINDER, constants.SE_ANSWERED)
         FINDER.link('Acknowledge Answer').click()
@@ -127,6 +133,8 @@ class AcknowledgeAnswer(BrowserTestCase):
 class AddFollowUpQuestion(BrowserTestCase):
 
     def test_add_followup(self):
+        """Test sector expert adds followup question
+        """
         FINDER.link('Add follow up question').click()
 
         time.sleep(0.5)

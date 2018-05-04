@@ -165,7 +165,8 @@ class EditQuestion(BrowserTestCase):
 class SendQuestionForApproval(BrowserTestCase):
 
     def test_send_question_for_approval(self):
-
+        """Test sector expert can send question for approval
+        """
         button = FINDER.link('Send Question for Approval')
         button.click()
         util.checks_link_names(self, FINDER, constants.SE_DRAFTED)
@@ -201,6 +202,8 @@ class EditKeyFlags(BrowserTestCase):
 class RequestComments(BrowserTestCase):
 
     def test_request_comments(self):
+        """Test sector expert can request comments
+        """
         FINDER.link('Request Comments').click()
         FINDER.css('.chosen-container').click()
         FINDER.xpath(
@@ -214,6 +217,8 @@ class RequestComments(BrowserTestCase):
 class Conclusions(BrowserTestCase):
 
     def test_go_to_conclusions(self):
+        """Test sector expert can go to conclusions
+        """
         FINDER.link('Close Comments').click()
         FINDER.link('Go to Conclusions').click()
         time.sleep(1)
@@ -229,7 +234,8 @@ class Conclusions(BrowserTestCase):
 class DeleteObservation(BrowserTestCase):
 
     def test_delete_observation(self):
-
+        """Test admin deletes observation
+        """
         # go back to observation listing
         FINDER.link("Test ReviewFolder").click()
 

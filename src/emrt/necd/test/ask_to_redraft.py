@@ -65,6 +65,8 @@ class AskToRedraft(BrowserTestCase):
 
     @util.runas('leadreviewer')
     def test_ask_to_redraft(self):
+        """Test leadreviewer asks sector expert to redraft
+        """
         # Check buttons for LR
         util.checks_link_names(self, FINDER, constants.LR_DRAFTED)
 
@@ -84,6 +86,8 @@ class SERedraft(BrowserTestCase):
 
     @util.runas('sectorexpert')
     def test_se_redraft(self):
+        """Test sector expert redrafts question
+        """
 
         # Questions cannot be deleted after redrafting
         buttons = constants.SE_DRAFT

@@ -37,6 +37,8 @@ def suite(browser, base_url, extra_args):
 class RemovePloneSite(BrowserTestCase):
 
     def test_remove_site(self):
+        """Test zope user removes test site after finishing tests
+        """
         pos = self.url.rfind("/")
         base_url = self.url[:pos]
 

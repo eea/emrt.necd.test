@@ -62,6 +62,8 @@ class FinishObservationLR(BrowserTestCase):
 
     @util.runas('leadreviewer')
     def test_go_to_conclusions_lr(self):
+        """Test leadreviewer goes to conclusions
+        """
 
         # Check buttons for LR
         util.checks_link_names(self, FINDER, constants.LR_DRAFTED)
