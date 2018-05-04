@@ -17,10 +17,9 @@ RUN wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.z
  && unzip chromedriver_linux64.zip \
  && mv chromedriver /usr/bin/chromedriver \
  && chown root:root /usr/bin/chromedriver \
- && chmod +x /usr/bin/chromedriver
+ && chmod +x /usr/bin/chromedriver 
 
-# RUN useradd --create-home --user-group selenium \
-RUN useradd selenium
+RUN useradd --create-home --user-group selenium 
 
 USER selenium
 
