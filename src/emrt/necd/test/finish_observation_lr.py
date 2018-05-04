@@ -52,6 +52,9 @@ def suite(browser, base_url, extra_args):
     # test leadreviewer goes to conclusions
     test_suite.add_tests(FinishObservationLR)
 
+    # Delete test observation
+    test_suite.add_tests(se.DeleteObservation)
+
     return test_suite()
 
 

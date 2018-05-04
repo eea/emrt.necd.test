@@ -64,6 +64,9 @@ def suite(browser, base_url, extra_args):
     # test sector expert adds followup question
     test_suite.add_tests(AddFollowUpQuestion)
 
+    # Delete test observation
+    test_suite.add_tests(se.DeleteObservation)
+
     return test_suite()
 
 

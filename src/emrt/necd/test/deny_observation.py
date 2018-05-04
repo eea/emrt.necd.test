@@ -55,4 +55,7 @@ def suite(browser, base_url, extra_args):
     #Add test for finishing observation
     test_suite.add_tests(lr.DenyObservation)
 
+    # Delete test observation
+    test_suite.add_tests(se.DeleteObservation)
+
     return test_suite()

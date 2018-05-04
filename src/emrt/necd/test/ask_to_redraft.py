@@ -55,6 +55,9 @@ def suite(browser, base_url, extra_args):
     #test sectorexpert redrafts question
     test_suite.add_tests(SERedraft)
 
+    # Delete test observation
+    test_suite.add_tests(se.DeleteObservation)
+
     return test_suite()
 
 

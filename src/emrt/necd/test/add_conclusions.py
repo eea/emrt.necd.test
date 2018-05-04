@@ -71,6 +71,9 @@ def suite(browser, base_url, extra_args):
     # test sectorexpert adds conclusion
     test_suite.add_tests(AddConclusions)
 
+    # Delete test observation
+    test_suite.add_tests(se.DeleteObservation)
+
     return test_suite()
 
 
@@ -90,9 +93,3 @@ class AddConclusions(BrowserTestCase):
             EC.presence_of_element_located((By.LINK_TEXT, 'Conclusions'))
         )
         print(text)
-
-
-class RemoveTestSite(BrowserTestCase):
-
-    def test_remove_site(self):
-        pass

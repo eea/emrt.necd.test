@@ -3,6 +3,11 @@ import emrt.necd.test.util as util
 import time
 import unittest
 
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+
 from edw.seleniumtesting.common import BrowserTestCase
 
 
@@ -61,6 +66,12 @@ class ReviewFolder(BrowserTestCase):
     def test_review_folder(self):
         """ Test 'Save Observation' button exists
         """
+        try:
+            FINDER.link("Test ReviewFolder").click()
+            time.sleep(0.5)
+        except:
+            pass
+
         new_obs = FINDER.link("New observation")
         self.assertEqual("New observation", new_obs.text)
 
@@ -140,12 +151,13 @@ class EditQuestion(BrowserTestCase):
         time.sleep(0.5)
 
         FINDER.xpath('//*[@id="form-buttons-save"]').click()
-        time.sleep(1)
-
+        time.sleep(0.5)
         #Check question edited
-        edited_answer_content = FINDER.css('.answerContent')
-        self.assertTrue('(edited)' in edited_answer_content.text)
+        edited_answer_content = WebDriverWait(self.browser,10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, 'answerContent'))
+        )
 
+        self.assertTrue('(edited)' in edited_answer_content.text)
         # Check buttons
         util.checks_link_names(self, FINDER, constants.SE_DRAFT)
 
@@ -202,7 +214,6 @@ class RequestComments(BrowserTestCase):
 class Conclusions(BrowserTestCase):
 
     def test_go_to_conclusions(self):
-
         FINDER.link('Close Comments').click()
         FINDER.link('Go to Conclusions').click()
         time.sleep(1)
@@ -213,3 +224,45 @@ class Conclusions(BrowserTestCase):
         request_fin = FINDER.xpath('//*[@value="Request finalisation of the observation"]')
         self.assertTrue('request_fin.is_displayed()')
         request_fin.click()
+
+
+class DeleteObservation(BrowserTestCase):
+
+    def test_delete_observation(self):
+
+        # go back to observation listing
+        FINDER.link("Test ReviewFolder").click()
+
+        # check if observation has been finalised
+        row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]')
+        row_one.click()
+
+        self.browser.get(self.browser.current_url+'/logout')
+
+        # switch to login window and close the other one
+        self.browser.switch_to.window(self.browser.window_handles[1])
+        self.browser.close()
+        self.browser.switch_to.window(self.browser.window_handles[-1])
+
+        # login as admin
+        usr, pwd = list(self.extra_args["zope_user"].items())[0]
+
+        # get form fields
+        login_name = self.browser.find_element_by_id("__ac_name")
+        passwd = self.browser.find_element_by_id("__ac_password")
+
+        # fill in form
+        login_name.send_keys(usr)
+        passwd.send_keys(pwd)
+
+        # submit
+        self.browser.find_element_by_name("submit").send_keys(Keys.RETURN)
+
+        pos = self.browser.current_url.rfind("/")
+        url = self.browser.current_url[:pos]
+        self.browser.get(url)
+
+        # Delete observation
+        FINDER.link("Contents").click()
+        FINDER.css("input[type='checkbox']").click()
+        FINDER.css("input[name='folder_delete:method']").click()

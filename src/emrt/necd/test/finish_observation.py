@@ -28,31 +28,34 @@ def suite(browser, base_url, extra_args):
         **params
         )
 
-    #Add tests for sector expert actions
+    # Add tests for sector expert actions
     test_suite.add_tests(se.ReviewFolder)
 
-    #test sectorexpert add observation
+    # test sectorexpert add observation
     test_suite.add_tests(se.AddObservation)
 
-    #test sectorexpert add question
+    # test sectorexpert add question
     test_suite.add_tests(se.AddQuestion)
 
-    #test sectorexpert edit question
+    # test sectorexpert edit question
     test_suite.add_tests(se.EditQuestion)
 
-    #test sectorexpert edit key flags
+    # test sectorexpert edit key flags
     test_suite.add_tests(se.EditKeyFlags)
 
-    #test sectorexpert request comments
+    # test sectorexpert request comments
     test_suite.add_tests(se.RequestComments)
 
-    #test sectorexpert can request finalisation of the observation
+    # test sectorexpert can request finalisation of the observation
     test_suite.add_tests(se.Conclusions)
 
-    #Add actions for lead reviewer actions
+    # Add actions for lead reviewer actions
     test_suite.add_tests(lr.ObservationConclusion)
 
-    #Add test for finishing observation
+    # Add test for finishing observation
     test_suite.add_tests(lr.FinishObservation)
+
+    # Delete test observation
+    test_suite.add_tests(se.DeleteObservation)
 
     return test_suite()

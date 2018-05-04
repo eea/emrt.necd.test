@@ -10,22 +10,24 @@ FINDER = util.ElementFinder()
 class ObservationConclusion(BrowserTestCase):
 
     def setUp(self):
-        self.browser.get(self.url)
+        pos = self.browser.current_url[:-1].rfind('/')
+        url = self.browser.current_url[:pos]
+        self.browser.get(url)
 
     @util.runas('leadreviewer')
     def test_conclusions(self):
         """ Test 'Conclusions' workflow
         """
-
         obs_selector = '//*[@id="observations-table"]/tbody/tr[1]/td[1]/a'
         first_obs = WebDriverWait(self.browser, 10).until(
             EC.presence_of_element_located((By.XPATH, obs_selector))
         )
         first_obs.click()
 
-        # Switch to observation window
-        obs_window = FINDER.browser.window_handles[1]
-        self.browser.switch_to.window(obs_window)
+        self.browser.switch_to.window(self.browser.window_handles[0])
+        self.browser.close()
+        self.browser.switch_to.window(self.browser.window_handles[-1])
+
         conclusions_tab = FINDER.link("Conclusions")
 
         self.assertEqual("Conclusions", conclusions_tab.text)
@@ -37,13 +39,11 @@ class FinishObservation(BrowserTestCase):
     def test_finish_observation(self):
         """Test leadreviewer can finish observation
         """
-        came_from = self.url
-
         # click finish observation button
         FINDER.link("Finish Observation").click()
 
         # go back to observation listing
-        self.browser.get(came_from)
+        FINDER.link("Test ReviewFolder").click()
 
         # check if observation has been finalised
         row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]')
@@ -55,8 +55,6 @@ class DenyObservation(BrowserTestCase):
     def test_deny_observation(self):
         """Test leadreviewer can deny observation
         """
-        came_from = self.url
-
         # click Conclusions tab
         FINDER.link('Conclusions').click()
 
@@ -73,7 +71,7 @@ class DenyObservation(BrowserTestCase):
         deny_btn.click()
 
         # go back to observation listing
-        self.browser.get(came_from)
+        FINDER.link("Test ReviewFolder").click()
 
         # check if observation has been finalised
         row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]')

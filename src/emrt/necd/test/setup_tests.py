@@ -47,6 +47,7 @@ def suite(browser, base_url, extra_args):
 class AddPloneSite(BrowserTestCase):
 
     def setUp(self):
+
         pos = self.url.rfind("/")
         self.browser.get(self.url[:pos])
 
