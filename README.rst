@@ -24,15 +24,18 @@ Docker build and run tests
 
 ::
 
-To build the Docker image: ::
+Go to the docker directory: ::
 
-  docker build -t <tag_name> .
+	cd docker
 
-Now, run the tests: ::
+Edit the environment file containing the command that runs the tests.
+Modify the credentials accordingly for the LDAP Manager DN, Zope user, and EMRT-NECD users and roles.
+Run the *setup_tests* to prepare a Plone site for the tests, enter the desired tests and then remove the Plone site by running the *remove_test_site* test.
 
-  docker run --rm -it --cap-add=SYS_ADMIN <tag_name> -A='--headless' http://<host_ip>:<port>/Plone/2018/ emrt.necd.test.review_folder
-    -ea roles sectorexpert user_for_sectorexpert
-    -ea users "user_for_sectorexpert" "pwd_for_user"
+Build the selenium test service and see the running tests: ::
+
+	docker-compose up -d; docker-compose logs -f selenium
+
 
 Please also check the ``edw.seleniumtesting`` `usage page <https://github.com/eaudeweb/edw.seleniumtesting#usage>`_ for additional information.
 
