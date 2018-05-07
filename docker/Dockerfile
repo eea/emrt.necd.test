@@ -17,13 +17,14 @@ RUN wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.z
  && unzip chromedriver_linux64.zip \
  && mv chromedriver /usr/bin/chromedriver \
  && chown root:root /usr/bin/chromedriver \
- && chmod +x /usr/bin/chromedriver 
+ && chmod +x /usr/bin/chromedriver
 
-RUN useradd --create-home --user-group selenium 
+RUN useradd --create-home --user-group selenium
 
 USER selenium
 
+RUN mkdir /home/selenium/results
+WORKDIR /home/selenium/results
+
 # Install the emrt.necd.test package
 RUN pip3 install --user -U git+https://github.com/eea/emrt.necd.test.git@update_tests
-
-ENTRYPOINT ["/home/selenium/.local/bin/seleniumtesting", "-v", "-B", "chrome", "-P", "/usr/bin/chromedriver"]

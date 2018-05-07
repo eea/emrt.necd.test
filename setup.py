@@ -40,6 +40,7 @@ setup(
     ],
     entry_points={
         'edw.seleniumtesting': [
+            'emrt.necd.test.setup_tests = emrt.necd.test.setup_tests:suite',
             'emrt.necd.test.review_folder = emrt.necd.test.review_folder:suite',
             'emrt.necd.test.finish_observation = emrt.necd.test.finish_observation:suite',
             'emrt.necd.test.deny_observation = emrt.necd.test.deny_observation:suite',
@@ -47,7 +48,6 @@ setup(
             'emrt.necd.test.finish_observation_lr = emrt.necd.test.finish_observation_lr:suite',
             'emrt.necd.test.ask_to_redraft = emrt.necd.test.ask_to_redraft:suite',
             'emrt.necd.test.add_conclusions = emrt.necd.test.add_conclusions:suite',
-            'emrt.necd.test.setup_tests = emrt.necd.test.setup_tests:suite',
             'emrt.necd.test.remove_test_site = emrt.necd.test.remove_test_site:suite',
         ]
     }
