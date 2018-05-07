@@ -32,6 +32,9 @@ def suite(browser, base_url, extra_args):
     # test admin adds a new Plone Site
     test_suite.add_tests(AddPloneSite)
 
+    # test admin sets the cache server
+    test_suite.add_tests(SetupCache)
+
     # test admin sets the LDAP plugin settings
     test_suite.add_tests(SetupLDAPPlugin)
 
@@ -76,12 +79,30 @@ class AddPloneSite(BrowserTestCase):
         FINDER.css(".formControls > input[type='submit']").click()
 
 
+class SetupCache(BrowserTestCase):
+    """Test zope user sets the memcached settings
+    """
+    def test_setup_memcached(self):
+        came_from = self.browser.current_url
+        path = '/memcached/manage_workspace'
+        self.browser.get(came_from + path)
+
+        # set correct memcached server
+        server_xpath = '/html/body/form/table/tbody/tr[3]/td[2]/textarea'
+        memcache_server = FINDER.xpath(server_xpath)
+        host, port = memcache_server.text.split(':')
+        memcache_server.clear()
+        memcache_server.send_keys('memcached' + ':' + port)
+
+        FINDER.css('.form-element > input[type="submit"]').click()
+
+        self.browser.get(came_from)
+
 class SetupLDAPPlugin(BrowserTestCase):
 
     def test_setup_ldap_plugin(self):
         """Test zope user sets the manager DN settings
         """
-
         came_from = self.browser.current_url
 
         # Setup LDAP

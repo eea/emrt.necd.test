@@ -9,7 +9,14 @@ services:
     env_file:
       - ./selenium.env
     command: "bash -c 'bash -c \"$$COMMAND\"'"
+    
   plone:
     image: eeacms/plone-emrt-necd:staging
     environment:
       ZOPE_MODE: "standalone"
+
+  memcached:
+    image: memcached:1.4.37
+    command:
+    - -m
+    - '2048'
