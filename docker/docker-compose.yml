@@ -1,7 +1,9 @@
 version: "2"
+
 services:
+
   selenium:
-    build: .
+    image: eeacms/emrt.necd.test:latest
     cap_add:
       - ALL
     depends_on:
@@ -9,7 +11,7 @@ services:
     env_file:
       - ./selenium.env
     command: "bash -c 'bash -c \"$$COMMAND\"'"
-    
+
   plone:
     image: eeacms/plone-emrt-necd:staging
     environment:
@@ -18,5 +20,5 @@ services:
   memcached:
     image: memcached:1.4.37
     command:
-    - -m
-    - '2048'
+      - -m
+      - '2048'
