@@ -7,9 +7,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
 
 from edw.seleniumtesting.common import BrowserTestCase
-
 
 FINDER = util.ElementFinder()
 
@@ -67,7 +67,7 @@ class ReviewFolder(BrowserTestCase):
         """ Test 'Save Observation' button exists
         """
         try:
-            FINDER.link("Test ReviewFolder").click()
+            FINDER.link("Back to overview list").click()
             time.sleep(0.5)
         except:
             pass
@@ -237,15 +237,21 @@ class DeleteObservation(BrowserTestCase):
         """Test admin deletes observation
         """
         # go back to observation listing
-        FINDER.link("Test ReviewFolder").click()
+        try:
+            link_back = FINDER.link("Back to overview list")
+        except NoSuchElementException:
+            link_back = FINDER.link("Overview list")
+
+        link_back.click()
 
         # check if observation has been finalised
         row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]')
         row_one.click()
 
-        self.browser.get(self.browser.current_url+'/logout')
+        FINDER.link("Log out").click()
 
-        # switch to login window and close the other one
+        # Switch to login window and close the other one.
+        # Needed because clicking an observation will open it in a new tab.
         self.browser.switch_to.window(self.browser.window_handles[1])
         self.browser.close()
         self.browser.switch_to.window(self.browser.window_handles[-1])
