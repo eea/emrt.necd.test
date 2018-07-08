@@ -143,7 +143,8 @@ class EditQuestion(BrowserTestCase):
 
         # Focus on active element
         time.sleep(0.5)
-        popup = self.browser.switch_to.active_element
+        popup = FINDER.css('#form-widgets-text')
+        popup.send_keys(Keys.HOME)
         popup.send_keys('(edited)')
 
         # Focus back to page content

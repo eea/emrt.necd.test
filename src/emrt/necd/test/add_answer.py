@@ -1,3 +1,5 @@
+from selenium.webdriver.common.keys import Keys
+
 import emrt.necd.test.constants as constants
 import emrt.necd.test.review_folder as se
 import emrt.necd.test.util as util
@@ -107,10 +109,12 @@ class CreateAnswer(BrowserTestCase):
 
         FINDER.link('Edit answer').click()
         time.sleep(0.5)
-        FINDER.css('#form-widgets-text').send_keys("(edited)")
+        popup = FINDER.css('#form-widgets-text')
+        popup.send_keys(Keys.HOME)
+        popup.send_keys("(edited)")
         FINDER.xpath('//*[@id="form-buttons-save"]').click()
         edited_answer = FINDER.css('.commentanswer > .answerContent')
-        self.assertEqual(edited_answer.text, '(edited)'+input)
+        self.assertEqual(edited_answer.text, '(edited)' + input)
 
         FINDER.link('Submit Answer').click()
 
@@ -123,7 +127,6 @@ class AcknowledgeAnswer(BrowserTestCase):
      def test_acknowledge_answer(self):
         """Test sector expert acknowledges answer
         """
-
         util.checks_link_names(self, FINDER, constants.SE_ANSWERED)
         FINDER.link('Acknowledge Answer').click()
 
