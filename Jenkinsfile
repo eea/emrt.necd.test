@@ -5,10 +5,10 @@ pipeline {
 		stage('Run docker') {
             
             steps {
-                echo 'Run docker........'
-                cd docker
-                docker-compose up -d
-                docker-compose logs -f selenium
+                sh `echo 'Run docker........'`
+                sh `cd docker`
+                sh `docker-compose up -d`
+                sh `docker-compose logs -f selenium`
             }
         }
 	}
