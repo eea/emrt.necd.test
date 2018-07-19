@@ -2,19 +2,13 @@ pipeline {
 	agent any
 
 	stages {
-		stage('Build') {
+		stage('Run docker') {
+            
             steps {
-                echo 'Building..'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+                echo 'Run docker........'
+                cd docker
+                docker-compose up -d
+                docker-compose logs -f selenium
             }
         }
 	}
