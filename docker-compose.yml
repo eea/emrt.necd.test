@@ -1,0 +1,15 @@
+version: "2"
+services:
+  selenium:
+    build: .
+    cap_add:
+      - ALL
+    depends_on:
+      - plone
+    env_file:
+      - ./docker/selenium.env
+    command: "bash -c 'bash -c \"$$COMMAND\"'"
+  plone:
+    image: eeacms/plone-emrt-necd:staging
+    environment:
+      ZOPE_MODE: "standalone"
