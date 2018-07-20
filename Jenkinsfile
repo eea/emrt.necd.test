@@ -1,4 +1,6 @@
 pipeline {
+	def app
+
 	agent { dockerfile true }
 
 	stages {
