@@ -6,22 +6,23 @@ pipeline {
 		stage('Build image') {
 
 			steps {
-				node(label: 'docker-1.13') {
+				/*node(label: 'docker-1.13') {
 					script {
-						def app
-		    			app = docker.build("getintodevops/hellonode")
+						def app = docker.build("getintodevops/hellonode")
 					}
-				}
+				}*/
+				echo 'Build using Dockerfile'
 			}
     	}
 
     stage('Test image') {
 		steps {
-			script {
+			/*script {
 				app.inside {
             		sh 'echo "Tests passed"'
         		}
-			}	
+			}*/	
+			echo 'Test image stage'
 		}   			
         
 	}
