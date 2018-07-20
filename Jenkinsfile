@@ -1,22 +1,22 @@
 pipeline {
-
+	
 	agent { dockerfile true }
 
 	stages {
-		node {
-			def app
+		stage('Build image') {
 
-			stage('Build image') {
+			node(label: 'docker-1.13') {
+				def app
 		    	app = docker.build("getintodevops/hellonode")
-	    	}
+			}
+    	}
 
-	    	stage('Test image') {
-       
-		        app.inside {
-		            sh 'echo "Tests passed"'
-		        }
-    		}
-		}
-		
+    stage('Test image') {
+   			
+        app.inside {
+            sh 'echo "Tests passed"'
+        }
+	}
     }
 }
+	
