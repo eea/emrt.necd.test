@@ -2,6 +2,12 @@ FROM ubuntu:16.04
 
 SHELL ["/bin/bash", "-c"]
 
+# Install docker client (for Jenkins)
+RUN curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.04.0-ce.tgz \
+  && tar xzvf docker-17.04.0-ce.tgz \
+  && mv docker/docker /usr/local/bin \
+  && rm -r docker docker-17.04.0-ce.tgz
+
 RUN depsChromeDriver='unzip xvfb libxi6 libgconf-2-4' \
  && apt-get update \
  && apt-get -y install zip unzip curl git python3-pip $depsChromeDriver
