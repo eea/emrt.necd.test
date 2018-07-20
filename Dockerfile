@@ -2,11 +2,6 @@ FROM ubuntu:16.04
 
 SHELL ["/bin/bash", "-c"]
 
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - \
- && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
- && apt-get update \
- && apt-get install -y docker-ce
-
 RUN depsChromeDriver='unzip xvfb libxi6 libgconf-2-4' \
  && apt-get update \
  && apt-get -y install zip unzip curl git python3-pip $depsChromeDriver
