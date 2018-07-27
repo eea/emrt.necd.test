@@ -2,6 +2,7 @@ version: "2"
 services:
   selenium:
     container_name: emrt-necd-selenium
+    stdin_open: true
     build: .
     cap_add:
       - ALL
