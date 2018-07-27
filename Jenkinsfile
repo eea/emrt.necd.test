@@ -9,9 +9,11 @@ pipeline {
                         try {
                             checkout scm
                             sh "docker build -t ${BUILD_TAG} ."
+                            sh "docker-compose up -d plone"
+                            sh "docker compose up selenium"
                         }
                         finally {
-                            sh "docker rmi ${BUILD_TAG}"
+                            sh "docker-compose down -v --rmi all"
                         }
                     }
                 }
