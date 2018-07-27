@@ -1,6 +1,7 @@
 version: "2"
 services:
   selenium:
+    container_name: emrt-necd-selenium
     build: .
     cap_add:
       - ALL
@@ -11,5 +12,6 @@ services:
     command: 'echo \"$$COMMAND\"'
   plone:
     image: eeacms/plone-emrt-necd:staging
+    container_name: emrt-necd-plone                         
     environment:
       ZOPE_MODE: "standalone"
