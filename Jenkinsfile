@@ -9,7 +9,7 @@ pipeline {
                         try {
                             checkout scm
                             sh "docker-compose up -d plone"
-                            sh "docker compose up selenium"
+                            sh "docker-compose up selenium"
                         }
                         finally {
                             sh "docker-compose down -v --rmi all"
