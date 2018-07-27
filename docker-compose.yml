@@ -7,9 +7,7 @@ services:
       - ALL
     depends_on:
       - plone
-    env_file:
-      - ./docker/selenium.env
-    command: 'echo \"$$COMMAND\"'
+    command: bash -c '/home/selenium/.local/bin/seleniumtesting -v -B chrome -P /usr/bin/chromedriver -A='--headless' http://plone:8080/Workflow_test -ea ldap_credentials "$LDAP_USER" "$LDAP_PASSWORD" -ea zope_user admin admin -ea roles sectorexpert acc_sectorexpert -ea users "$EXPERT_USER" "EXPERT_PASSWORD" -ea roles leadreviewer acc_leadreviewer -ea users "$REVIEWER_USER" "$REVIEWER_PASSWORD" -ea roles msauthority acc_msauthority -ea users "AUTHORITY_USER" "AUTHORITY_PASSWORD"'
   plone:
     image: eeacms/plone-emrt-necd:staging
     container_name: emrt-necd-plone                         
