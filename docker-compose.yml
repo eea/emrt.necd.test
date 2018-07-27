@@ -3,6 +3,15 @@ services:
   selenium:
     container_name: emrt-necd-selenium
     stdin_open: true
+    environment:
+      - LDAP_USER
+      - LDAP_PASSWORD
+      - EXPERT_USER
+      - EXPERT_PASSWORD
+      - REVIEWER_USER
+      - REVIEWER_PASSWORD
+      - AUTHORITY_USER
+      - AUTHORITY_PASSWORD
     build: .
     cap_add:
       - ALL
