@@ -10,7 +10,7 @@ services:
       - plone
     env_file:
       - ./selenium.env
-    command: "bash -c 'bash -c \"$$COMMAND\"'"
+    command: "/run.sh"
 
   plone:
     image: eeacms/plone-emrt-necd:staging

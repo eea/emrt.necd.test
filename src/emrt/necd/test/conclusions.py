@@ -43,7 +43,7 @@ class FinishObservation(BrowserTestCase):
         FINDER.link("Finish Observation").click()
 
         # go back to observation listing
-        FINDER.link("Test ReviewFolder").click()
+        FINDER.link("Back to overview list").click()
 
         # check if observation has been finalised
         row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]')
@@ -71,7 +71,7 @@ class DenyObservation(BrowserTestCase):
         deny_btn.click()
 
         # go back to observation listing
-        FINDER.link("Test ReviewFolder").click()
+        FINDER.link("Back to overview list").click()
 
         # check if observation has been finalised
         row_one = FINDER.xpath('//*[@id="observations-table"]/tbody/tr[1]')

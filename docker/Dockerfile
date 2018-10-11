@@ -28,3 +28,5 @@ WORKDIR /home/selenium/results
 
 # Install the emrt.necd.test package
 RUN pip3 install --user -U git+https://github.com/eea/emrt.necd.test.git
+
+COPY run.sh /run.sh
