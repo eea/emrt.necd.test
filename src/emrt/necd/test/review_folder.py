@@ -133,7 +133,6 @@ class EditQuestion(BrowserTestCase):
     def test_edit_question(self):
         """Test sector expert can edit question
         """
-        import pdb; pdb.set_trace()
         #Edit question
         FINDER.link('Edit question').click()
 
