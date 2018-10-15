@@ -66,11 +66,7 @@ class ReviewFolder(BrowserTestCase):
     def test_review_folder(self):
         """ Test 'Save Observation' button exists
         """
-        try:
-            FINDER.link("Back to overview list").click()
-            time.sleep(0.5)
-        except:
-            pass
+        FINDER.link("Test ReviewFolder").click()
 
         new_obs = FINDER.link("New observation")
         self.assertEqual("New observation", new_obs.text)
@@ -83,7 +79,6 @@ class AddObservation(BrowserTestCase):
         """
         # click new observation button
         FINDER.link('New observation').click()
-
         # fill in form fields
         FINDER.name('form.widgets.text').send_keys('Test observation')
         FINDER.name('form.widgets.year').send_keys('2017')
@@ -138,6 +133,7 @@ class EditQuestion(BrowserTestCase):
     def test_edit_question(self):
         """Test sector expert can edit question
         """
+        import pdb; pdb.set_trace()
         #Edit question
         FINDER.link('Edit question').click()
 
@@ -205,7 +201,10 @@ class RequestComments(BrowserTestCase):
     def test_request_comments(self):
         """Test sector expert can request comments
         """
-        FINDER.link('Request Comments').click()
+        req_btn = WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located((By.LINK_TEXT, 'Request Comments'))
+        )
+        req_btn.click()
         FINDER.css('.chosen-container').click()
         FINDER.xpath(
             '//*[@class="chosen-results"]/li[contains(text(), "TERT NECD")]'
