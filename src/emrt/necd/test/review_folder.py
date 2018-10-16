@@ -78,6 +78,7 @@ class AddObservation(BrowserTestCase):
         """ Test sectorexpert can add an observation.
         """
         # click new observation button
+        # time.sleep(1)
         FINDER.link('New observation').click()
         # fill in form fields
         FINDER.name('form.widgets.text').send_keys('Test observation')
@@ -137,7 +138,10 @@ class EditQuestion(BrowserTestCase):
         FINDER.link('Edit question').click()
 
         # Focus on active element
-        time.sleep(0.5)
+        # time.sleep(1)
+        WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located((By.ID, 'form-widgets-text'))
+        )
         popup = FINDER.css('#form-widgets-text')
         popup.send_keys(Keys.HOME)
         popup.send_keys('(edited)')
@@ -148,12 +152,13 @@ class EditQuestion(BrowserTestCase):
 
         FINDER.xpath('//*[@id="form-buttons-save"]').click()
         time.sleep(0.5)
+
         #Check question edited
         edited_answer_content = WebDriverWait(self.browser,10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'answerContent'))
         )
-
         self.assertTrue('(edited)' in edited_answer_content.text)
+
         # Check buttons
         util.checks_link_names(self, FINDER, constants.SE_DRAFT)
 
