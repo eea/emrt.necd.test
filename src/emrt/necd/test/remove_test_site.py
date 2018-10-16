@@ -42,11 +42,8 @@ class RemovePloneSite(BrowserTestCase):
         pos = self.url.rfind("/")
         base_url = self.url[:pos]
 
-        usr, pwd = list(self.extra_args["zope_user"].items())[0]
-        credentials = usr + ":" + pwd + "@"
-
         pos = base_url.find('//')
-        url = base_url[:pos + 2] + credentials + base_url[pos + 2:]
+        url = base_url[:pos + 2] + "admin:admin@" + base_url[pos + 2:]
         self.browser.get(url + '/manage_main')
 
         FINDER.css("input[value='Workflow_test']").click()
