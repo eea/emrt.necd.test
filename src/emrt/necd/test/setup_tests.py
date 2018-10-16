@@ -58,8 +58,7 @@ class AddPloneSite(BrowserTestCase):
         """
         base_url = self.browser.current_url
 
-        usr, pwd = list(self.extra_args["zope_user"].items())[0]
-        credentials = usr + ":" + pwd + "@"
+        credentials = "admin:admin@"
 
         pos = base_url.find('//')
         url = base_url[:pos + 2] + credentials + base_url[pos + 2:]
@@ -130,29 +129,33 @@ class SetupLDAPPlugin(BrowserTestCase):
 
 
 class AddReviewFolder(BrowserTestCase):
-
-    def test_add_review_folder(self):
-        """Test admin adds a review folder
-        """
+    def add_rf(self, type):
         # Add a new ReviewFolder
         FINDER.xpath(
             '//*[@id="plone-contentmenu-factories"]/dt/a/span[2]'
         ).click()
-
         FINDER.css("#reviewfolder").click()
         # Add title for the ReviewFolder
         FINDER.css("#form-widgets-IDublinCore-title").send_keys(
-            "Test ReviewFolder"
+            "Test ReviewFolder {}".format(type)
         )
+        # Set the ReviewFolder type
+        if type=='Projection':
+            FINDER.css('#form-widgets-type-1').click()
 
         FINDER.css("#form-buttons-save").click()
 
+    def test_add_review_folders(self):
+        """Test admin adds a review folder
+        """
+        came_from = self.browser.current_url
+
+        self.add_rf('Inventory')
+        self.browser.get(came_from)
+        self.add_rf('Projection')
 
 class SetupReviewFolderWorkflow(BrowserTestCase):
-
-    def test_setup_workflow(self):
-        """Test admin sets the workflow state for starting the review
-        """
+    def set_state(self):
         # publish the ReviewFolder
         FINDER.css(".state-private + span").click()
         FINDER.css("#workflow-transition-publish").click()
@@ -160,3 +163,11 @@ class SetupReviewFolderWorkflow(BrowserTestCase):
         # start the review
         FINDER.css(".state-published + span").click()
         FINDER.css("#workflow-transition-start").click()
+
+    def test_setup_workflow(self):
+        """Test admin sets the workflow state for starting the review
+        """
+        FINDER.link("Test ReviewFolder Inventory").click()
+        self.set_state()
+        FINDER.link("Test ReviewFolder Projection").click()
+        self.set_state()
