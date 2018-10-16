@@ -34,7 +34,7 @@ Go to the docker directory: ::
 
 	cd docker
 
-Edit the environment file (selenium.env) containing a template for storing the usernames and passwords.
+Edit the environment file (`selenium.env <https://github.com/eea/emrt.necd.test/blob/master/docker/selenium.env>`) containing a template for storing the usernames and passwords.
 Modify the credentials accordingly for the LDAP Manager DN and EMRT-NECD users and roles.
 
 Build the selenium test service and see the running tests: ::
