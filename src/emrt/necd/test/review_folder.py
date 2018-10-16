@@ -93,7 +93,7 @@ class AddObservation(BrowserTestCase):
         metadata_div = FINDER.css('.esdDiv').text
 
         self.assertTrue('Austria' in metadata_div)
-        self.assertTrue('1A1' in metadata_div)
+        self.assertTrue('0A' in metadata_div)
         self.assertTrue('SO2' in metadata_div)
         self.assertTrue('2017' in metadata_div)
 
