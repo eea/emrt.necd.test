@@ -13,10 +13,16 @@ Usage
 
 ::
 
-  seleniumtesting http://localhost/Plone/2018/ emrt.necd.test.review_folder \
+  seleniumtesting -v -B <browser_name> -P /path/to/browser/driver <url_for_testing> <test_name(s)> \
+    -ea ldap_credentials ldap_user ldap_password \
     -ea roles sectorexpert user_for_sectorexpert \
-    -ea users "user_for_sectorexpert" "pwd_for_user"
+    -ea users "user_for_sectorexpert" "pwd_for_user" \
+    -ea roles leadreviewer user_for_leadreviewer \
+    -ea users "user_for_leadreviewer" "pwd_for_user" \
+    -ea roles msauthority user_for_msauthority \
+    -ea users "user_for_msauthority" "pwd_for_user"
 
+For multiple tests, the test names will be separated by whitespace.
 
 
 Docker build and run tests
@@ -28,13 +34,12 @@ Go to the docker directory: ::
 
 	cd docker
 
-Edit the environment file containing the command that runs the tests.
-Modify the credentials accordingly for the LDAP Manager DN, Zope user, and EMRT-NECD users and roles.
-Run the *setup_tests* to prepare a Plone site for the tests, enter the desired tests and then remove the Plone site by running the *remove_test_site* test.
+Edit the environment file (selenium.env) containing a template for storing the usernames and passwords.
+Modify the credentials accordingly for the LDAP Manager DN and EMRT-NECD users and roles.
 
 Build the selenium test service and see the running tests: ::
 
-	docker-compose up -d; docker-compose logs -f selenium
+	docker-compose up -d plone memcached; docker-compose run selenium
 
 
 Please also check the ``edw.seleniumtesting`` `usage page <https://github.com/eaudeweb/edw.seleniumtesting#usage>`_ for additional information.
