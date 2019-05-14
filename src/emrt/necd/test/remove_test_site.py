@@ -12,7 +12,8 @@ def suite(browser, base_url, extra_args):
     `` seleniumtesting http://localhost/Workflow_test \\
         -ea roles admin acc_admin \\
         -ea users acc_admin acc_admin \\
-        -ea ldap_credentials ldap_manager_dn_acc ldap_manager_dn_pwd
+        -ea ldap_credentials ldap_manager_dn_acc ldap_manager_dn_pwd \\
+        -ea zope_user username password
     ``
     """
     FINDER.set_browser(browser)

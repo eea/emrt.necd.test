@@ -11,9 +11,9 @@ def suite(browser, base_url, extra_args):
     """ Call on review folder url providing user mapping and user accounts.\n
     `` seleniumtesting http://localhost/Workflow_test \\
         -ea roles admin acc_admin \\
-        -ea users acc_admin acc_admin
         -ea users acc_admin acc_admin \\
-        -ea ldap_credentials ldap_manager_dn_acc ldap_manager_dn_pwd
+        -ea ldap_credentials ldap_manager_dn_acc ldap_manager_dn_pwd \\
+        -ea zope_user username password
     ``
     """
     FINDER.set_browser(browser)

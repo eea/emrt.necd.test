@@ -18,7 +18,8 @@ def suite(browser, base_url, extra_args):
     """ Call on review folder url providing user mapping and user accounts.\n
     `` seleniumtesting http://localhost/Plone/2017 \\
         -ea roles sectorexpert acc_sectorexpert \\
-        -ea users acc_sectorexpert acc_sectorexpert_pwd
+        -ea users acc_sectorexpert acc_sectorexpert_pwd \\
+        -ea zope_user username password
     ``
     """
     FINDER.set_browser(browser)
@@ -93,7 +94,7 @@ class AddObservation(BrowserTestCase):
         metadata_div = FINDER.css('.esdDiv').text
 
         self.assertTrue('Austria' in metadata_div)
-        self.assertTrue('0A' in metadata_div)
+        self.assertTrue('1A1' in metadata_div)
         self.assertTrue('SO2' in metadata_div)
         self.assertTrue('2017' in metadata_div)
 
